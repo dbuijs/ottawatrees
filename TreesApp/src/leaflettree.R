@@ -6,7 +6,7 @@ evergreens <- grep("Pine|Spruce|Cedar|Fir|Pinus|Hemlock|Thuja", levels(alltrees$
 lilacs <- grep("Lilac", levels(alltrees$SPECIES), value = TRUE)
 apples <- grep("apple", levels(alltrees$SPECIES), value = TRUE, ignore.case = TRUE)
 oaks <- grep("^Oak", levels(alltrees$SPECIES), value = TRUE)
-
+foodtrees <- c("Apple", "Pear", "Serviceberry", "Black walnut", "cherry", "crabapple", "ginkgo", "grape", "hazel")
 treetyper <- function(species){
                                 switch(species,
                                        )
