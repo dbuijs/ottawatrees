@@ -1,11 +1,11 @@
 #Leaflet Map
 #library(leafletR)
-maples <- grep("Maple", levels(alltrees$SPECIES), value = TRUE)
-ashes <- grep("^Ash", levels(alltrees$SPECIES), value = TRUE)
-evergreens <- grep("Pine|Spruce|Cedar|Fir|Pinus|Hemlock|Thuja", levels(alltrees$SPECIES), value = TRUE)
-lilacs <- grep("Lilac", levels(alltrees$SPECIES), value = TRUE)
-apples <- grep("apple", levels(alltrees$SPECIES), value = TRUE, ignore.case = TRUE)
-oaks <- grep("^Oak", levels(alltrees$SPECIES), value = TRUE)
+maples <- grep("Maple", levels(alltrees@data$SPECIES), value = TRUE)
+ashes <- grep("^Ash", levels(alltrees@data$SPECIES), value = TRUE)
+evergreens <- grep("Pine|Spruce|Cedar|Fir|Pinus|Hemlock|Thuja", levels(alltrees@data$SPECIES), value = TRUE)
+lilacs <- grep("Lilac", levels(alltrees@data$SPECIES), value = TRUE)
+apples <- grep("apple", levels(alltrees@data$SPECIES), value = TRUE, ignore.case = TRUE)
+oaks <- grep("^Oak", levels(alltrees@data$SPECIES), value = TRUE)
 foodtrees <- c("Apple", "Pear", "Serviceberry", "Black walnut", "cherry", "crabapple", "ginkgo", "grape", "hazel")
 treetyper <- function(species){
                                 switch(species,
