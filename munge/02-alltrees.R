@@ -5,10 +5,12 @@ treemeta <- matrix(xpathSApply(htmlParse(as.character(alltrees@data$Description)
 alltrees@data <- cbind(alltrees@data, treemeta, stringsAsFactors = FALSE)
 treemetanames <- xpathSApply(htmlParse(as.character(alltrees@data$Description[1])), "//table//th", xmlValue)[-1]
 names(alltrees@data)[3:13] <- treemetanames
-
+print("Metadata parsed!")
 alltrees@data <- alltrees@data[,-2]
 alltrees@data[,1] <- as.character(alltrees@data[,1])
 alltrees@data[,c(2:3,9, 11:12)] <- lapply(alltrees@data[,c(2:3,9, 11:12)], as.numeric)
 alltrees@data[,c(5:8, 10)] <-lapply(alltrees@data[,c(5:8, 10)], as.factor)
-
+print("Data types done!")
 alltrees@data$neighbourhood <- over(alltrees, ottn)$names
+print("Added neighbourhoods!")
+cache('alltrees')

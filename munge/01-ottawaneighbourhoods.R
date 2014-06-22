@@ -7,4 +7,4 @@
 
 ottn <- ONSNeighbourhoods2012_SmallFile; rm(ONSNeighbourhoods2012_SmallFile)
 ottn <-spTransform(ottn, CRS("+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs"))
-cache(ottn)
+cache('ottn')
