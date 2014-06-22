@@ -7,10 +7,7 @@ lilacs <- grep("Lilac", levels(alltrees@data$SPECIES), value = TRUE)
 apples <- grep("apple", levels(alltrees@data$SPECIES), value = TRUE, ignore.case = TRUE)
 oaks <- grep("^Oak", levels(alltrees@data$SPECIES), value = TRUE)
 foodtrees <- c("Apple", "Pear", "Serviceberry", "Black walnut", "cherry", "crabapple", "ginkgo", "grape", "hazel")
-treetyper <- function(species){
-                                switch(species,
-                                       )
-}
+
 htree$treetype <- "Other"
 htree[mtree$SPECIES %in% maples, "treetype"] <- "Maple"
 htree[mtree$SPECIES %in% ashes, "treetype"] <- "Ash"
