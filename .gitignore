@@ -3,3 +3,5 @@
 .RData
 cache
 raw-data
+reports
+.DS_Store
