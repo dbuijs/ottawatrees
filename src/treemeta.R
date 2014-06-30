@@ -61,4 +61,6 @@ treetypes[treetypes$species %in% aspen, "treetype"] <- "Aspen"
 treetypes[treetypes$species %in% poplar, "treetype"] <- "Poplar"
 
 rm(speciestable, maples, ashes, evergreens, lilacs, oaks, elms, other, edible, birch, willow, aspen, poplar)
+treetypes$species <- factor(treetypes$species)
+treetypes$treetype <- factor(treetypes$treetype)
 cache('treetypes')
