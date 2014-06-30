@@ -12,11 +12,11 @@ treepdf <- function(location, zoom = 16, source = "google"){
                                                       (alltrees@coords[,2] > attributes(treemap)$bb$ll.lat) & 
                                                       (alltrees@coords[,2] < attributes(treemap)$bb$ur.lat))
                                         sometrees <- as.data.frame(alltrees[treeselect,], stringsAsFactors = FALSE)
-                                        ifelse(length(summary(droplevels(sometrees$species))) > 36, legcol <- 3, legcol <- 2)
+                                        ifelse(length(summary(factor(sometrees$treetype))) > 24, legcol <- 3, legcol <- 2)
 
                                         
                                         map <- ggmap(treemap, extent = "device") + 
-                                                geom_point(data = sometrees, aes(x=coords.x1, y = coords.x2, colour = species, size = dbh)) +
+                                                geom_point(data = sometrees, aes(x=coords.x1, y = coords.x2, colour = treetype, size = dbh)) +
                                                 guides(size = FALSE, col=guide_legend(ncol=legcol)) + 
                                                 ggtitle(paste("Trees of", location, sep = " ")) + 
                                                 theme(plot.title = element_text(lineheight=.8, face="bold"), legend.text=element_text(size=7))
