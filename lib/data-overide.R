@@ -1,10 +1,12 @@
 #data-overide.R
 #download Ottawa Tree Dataset from data.ottawa.ca if not already present
-#Assumes ONS neighbourhood files are already here. 
+#Assumes ONS neighbourhood files are in raw-data. 
 #Contact ONS directly at http://neighbourhoodstudy.ca/ if necessary.
-#import all kml and shp layers in raw-data with rgdal
-#require(rgdal, sp), loaded by ProjectTemplate
-
+#import all kml and shp layers in raw-data with rgdal.
+#libraries loaded separately because this script runs before ProjectTempalte loads other libraries.
+if(config$data_loading == "on"){
+  library(rgdal)
+  library(sp)
 treeurl <- "http://data.ottawa.ca/en/storage/f/2013-04-22T134822/Tree-Inventory-Apr162013.kml"
 if(!"Tree-Inventory-Apr162013.kml" %in% list.files("raw-data", pattern = "*.kml")) {
       print("Downloading tree file")
@@ -35,3 +37,4 @@ for(s in shpdirs){
 }
 
 rm(k, l, kfile, klayers, dsn, s, slayers, shpdirs)
+}
