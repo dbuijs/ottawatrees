@@ -1,6 +1,9 @@
 .Rproj.user
 .Rhistory
 .RData
+*.kml
+*.png
+*.pdf
 cache
 raw-data
 reports
