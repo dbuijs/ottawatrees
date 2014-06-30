@@ -12,6 +12,9 @@ alltrees@data[,c(2:3,9, 11:12)] <- lapply(alltrees@data[,c(2:3,9, 11:12)], as.nu
 alltrees@data[,c(5:8, 10)] <-lapply(alltrees@data[,c(5:8, 10)], as.factor)
 print("Data types done!")
 alltrees@data$neighbourhood <- over(alltrees, ottn)$names
+#special tree fix
+alltrees@data[is.na(alltrees@data$neighbourhood), "neighbourhood"] <- "Munster"
+
 print("Added neighbourhoods!")
 
 alltrees@data <- select(alltrees@data, 
