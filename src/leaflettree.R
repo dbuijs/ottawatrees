@@ -1,44 +1,30 @@
 #Leaflet Map
-#library(leafletR)
-maples <- grep("Maple", levels(alltrees@data$SPECIES), value = TRUE)
-ashes <- grep("^Ash", levels(alltrees@data$SPECIES), value = TRUE)
-evergreens <- grep("Pine|Spruce|Cedar|Fir|Pinus|Hemlock|Thuja", levels(alltrees@data$SPECIES), value = TRUE)
-lilacs <- grep("Lilac", levels(alltrees@data$SPECIES), value = TRUE)
-apples <- grep("apple", levels(alltrees@data$SPECIES), value = TRUE, ignore.case = TRUE)
-oaks <- grep("^Oak", levels(alltrees@data$SPECIES), value = TRUE)
-foodtrees <- c("Apple", "Pear", "Serviceberry", "Black walnut", "cherry", "crabapple", "ginkgo", "grape", "hazel")
+library(rCharts)
 
-htree$treetype <- "Other"
-htree[mtree$SPECIES %in% maples, "treetype"] <- "Maple"
-htree[mtree$SPECIES %in% ashes, "treetype"] <- "Ash"
-htree[mtree$SPECIES %in% evergreens, "treetype"] <- "Evergreen"
-htree[mtree$SPECIES %in% lilacs, "treetype"] <- "Lilac"
-htree[mtree$SPECIES %in% apples, "treetype"] <- "Apple"
-htree[mtree$SPECIES %in% oaks, "treetype"] <- "Oak"
-htree[mtree$SPECIES == "Locust Honey" , "treetype"] <- "Honey Locust"
-htree[mtree$SPECIES == "Linden Littleleaf", "treetype"] <- "Linden"
-htree[mtree$SPECIES == "Hackberry" , "treetype"] <- "Hackberry"
+ltrees <- as.data.frame(alltrees[alltrees@data$neighbourhood == "Qualicum - Redwood Park",])
 
-colors <- brewer.pal(10, "Paired")
-treetypes <- unique(mtree$treetype)
-mtree$color <- colors[match(mtree$treetype, treetypes)]
-mtree$popup <- paste0("<p>Species:  ", mtree$SPECIES, 
-                    "<br>Street Address:  ", mtree$ADDNUM, mtree$ADDSTR, 
-                    "<br>Diameter:   ", mtree$DBH, "</p>")
-tmp.data <- apply(mtree, 1, as.list)
+
+ttypes <- unique(ltrees$treetype)
+colors <- rainbow(length(ttypes))
+#colors <- tolower(colors)
+ltrees$color <- colors[match(ltrees$treetype, ttypes)]
+ltrees$popup <- paste0("<p>Species:  ", ltrees$species, 
+                    "<br>Street Address:  ", ltrees$addnum, ltrees$street, 
+                    "<br>Diameter:   ", ltrees$dbh, "</p>")
+tmp.data <- apply(ltrees, 1, as.list)
 
 tree.map <- Leaflet$new()
-tree.map$setView(c(45.34,-75.80), zoom = 16)
-tree.map$tileLayer(provider = 'Stamen.TonerLite')
+tree.map$setView(c(45.34,-75.79), zoom = 16)
+tree.map$tileLayer(provider = 'Stamen.TonerHybrid')
 # Add Data as GeoJSON Layer and Specify Popup and FillColor
-tree.map$geoJson(toGeoJSON(tmp.data, lat = 'latitude', lon = 'longitude'),
+tree.map$geoJson(toGeoJSON(tmp.data, lat = 'coords.x2', lon = 'coords.x1'),
                 onEachFeature = '#! function(feature, layer){
                 layer.bindPopup(feature.properties.popup)
                 } !#',
                 pointToLayer =  "#! function(feature, latlng){
                 return L.circleMarker(latlng, {
-                radius: feature.properties.DBH/15 + 5,
-                fillColor: feature.properties.color || 'red', 
+                radius: feature.properties.dbh/15 + 5,
+                fillColor: feature.properties.color, 
                 color: '#000',
                 weight: 1,
                 fillOpacity: 0.8
@@ -76,8 +62,8 @@ L1$geoJson(t.dat,
           } !#',
            pointToLayer =  "#! function(feature, latlng){
           return L.circleMarker(latlng, {
-          radius: feature.properties.DBH,
-          fillColor: feature.properties.SPECIES,
+          radius: feature.properties.dbh,
+          fillColor: feature.properties.species,
           weight: 1,
           fillOpacity: 0.8
           })
