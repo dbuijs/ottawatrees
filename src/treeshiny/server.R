@@ -19,7 +19,7 @@ library(RColorBrewer)
 # By ordering by centile, we ensure that the (comparatively rare) SuperZIPs
 # will be drawn last and thus be easier to see
 #treedata <- treedata[order(zipdata$centile),]
-treedata <- alltrees
+treedata <- as.data.frame(alltrees[alltrees@data$neighbourhood == "Qualicum - Redwood Park", ])
 
 shinyServer(function(input, output, session) {
 
@@ -86,21 +86,21 @@ shinyServer(function(input, output, session) {
       # Clear existing circles before drawing
       map$clearShapes()
       # Draw in batches of 1000; makes the app feel a bit more responsive
-      chunksize <- 1000
-      for (from in seq.int(1, nrow(treedata), chunksize)) {
-        to <- min(nrow(treedata), from + chunksize)
-        treechunk <- treedata[from:to,]
+      #chunksize <- 1000
+      #for (from in seq.int(1, nrow(treedata), chunksize)) {
+      #  to <- min(nrow(treedata), from + chunksize)
+      #  treechunk <- treedata[from:to,]
         # Bug in Shiny causes this to error out when user closes browser
         # before we get here
         try(
           map$addCircle(
-            treechunk$latitude, treechunk$longitude,
-            treechunk$DBH*0.1,
+            treedata$coords.x1, treedata$coords.x2,
+            treedata$dbh*0.1,
             list(stroke=FALSE, fill=TRUE, fillOpacity=0.4)
             
           )
         )
-      }
+    #  }
     })
     
     # TIL this is necessary in order to prevent the observer from
